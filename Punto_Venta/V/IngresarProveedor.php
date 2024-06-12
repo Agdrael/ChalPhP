@@ -10,10 +10,10 @@
     <!-- ================== BEGIN core-css ================== -->
     <link href="../assets/css/vendor.min.css" rel="stylesheet" />
     <link href="../assets/css/default/app.min.css" rel="stylesheet" />
-    <script src="../assets/js2/punto_venta.js"></script>
-
     <!-- ================== END core-css ================== -->
 
+    <script src="../assets/js2/punto_venta.js"></script>
+    
 </head>
 
 <body>
@@ -30,13 +30,13 @@
                             <div class="row mb-20px">
                                 <label class="form-label col-form-label col-md-1">Razon Social :</label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" type="text" placeholder="Ingrese razon social (nombre) ..." name="proveedor" id="proveedor" required>
+                                    <input class="form-control" type="text" placeholder="Ingrese razon social (nombre) ..." name="razon_social" id="razon_social" required>
                                 </div>
                             </div>
                             <div class="row mb-20px">
                                 <label class="form-label col-form-label col-md-1">Nom Comercial:</label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" type="text" placeholder="Ingrese Nombre comercial..." name="abreviado" id="abreviado" required>
+                                    <input class="form-control" type="text" placeholder="Ingrese Nombre comercial..." name="nombre_comercial" id="nombre_comercial" required>
                                 </div>
                             </div>
                             <div class="row mb-30px">
@@ -63,7 +63,16 @@
                                                     <option value="audi">Audi</option>
                                             </select>
                                         </div>
-                                       
+                                        <label class="form-label col-form-label col-md-2">Nueva nacionalidad:</label>
+                                        <div class="col-md-1">
+                                            <div class="form-check mt-1">
+                                                <input class="form-check-input" type="checkbox" name="nacionalidad" id="nacionalidad">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="form-control" type="text" placeholder="Ingrese el nuevo pais..." disabled name="n_pais" id="n_pais" required>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="row form-group mb-15px mt-10px">
@@ -131,8 +140,8 @@
                                 <!-- ================== separador ================== -->
                                 <div class="row mb-20px mt-30px">
                                     <label class="form-label col-form-label col-md-1">Act economica:</label>
-                                    <div class="col-sm-2">
-                                        <input class="form-control" type="text" placeholder="Ingrese actividad economica..." name="act_economica" id="act_economica" required>
+                                    <div class="col-sm-5">
+                                        <input onclick="Actividad_Economica()" class="form-control" type="text" placeholder="Ingrese actividad economica..." name="act_economica" id="act_economica" required>
                                     </div>
                                 </div>
                                 <div class="row form-group mb-15px">
@@ -185,7 +194,7 @@
                                 <div class="row mb-20px mt-30px">
                                     <label class="form-label col-form-label col-md-1">Cuenta:</label>
                                     <div class="col-sm-2">
-                                        <input class="form-control" type="text" placeholder=". . . . . . . ." name="Cuenta" id="Cuenta" required>
+                                        <input onclick="Cuenta_proveedor()" class="form-control" type="text" placeholder=". . . . . . . ." name="Cuenta" id="Cuenta" required>
                                     </div>
                                 </div>
                                 <div class="row form-group mb-30px">
@@ -232,5 +241,27 @@
         </div>
     </div>
 
+    <script>
+        //Form proveedores 
+        function Actividad_Economica() {
+            window.open('ActEconomica.php', 'miniatura', 'width=500,height=700');
+        }
+
+        function Cuenta_proveedor(){
+            window.open('Cuentas_proveedores.php','miniatura','width=500,height=700');
+        }
+
+
+        function recibirInfo(codigo, nombre) {
+            const informacion = codigo + ": " + nombre
+            document.getElementById('act_economica').value = informacion;
+        }
+
+        function recibirInfoCuenta(cuenta){
+            document.getElementById('Cuenta').value = cuenta;
+        }
+
+        
+    </script>
 
 </body>
