@@ -1,3 +1,6 @@
+<?php
+require '../M/conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="en" <head>
 <meta charset="utf-8" />
@@ -13,7 +16,7 @@
     <!-- ================== END core-css ================== -->
 
     <script src="../assets/js2/punto_venta.js"></script>
-    
+
 </head>
 
 <body>
@@ -55,20 +58,28 @@
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <select class="form-select" name="nacionalidad" id="nacionalidad">
+                                            <select onchange="Nacionalidad()" class="form-select" name="nacionalidad" id="nacionalidad">
                                                 <!=====php para traer nacionalidades=====>
-                                                    <option value="volvo">Volvo</option>
-                                                    <option value="saab">Saab</option>
-                                                    <option value="mercedes">Mercedes</option>
-                                                    <option value="audi">Audi</option>
+
+                                                    <?php
+                                                    try {
+                                                        $sentencia = $pdo->query("SELECT * FROM nacionalidades");
+                                                        $sentencia->execute();
+                                                        $obj_nacionalidad = $sentencia->fetchAll(PDO::FETCH_OBJ);
+                                                        print_r($obj_nacionalidad);
+                                                        foreach ($obj_nacionalidad as $x) { ?>
+
+                                                            <option value="<?php echo $x->id ?>"><?php echo $x->nacionalidad ?></option>
+                                                            <option value="otro">Otro..</option>
+                                                    <?php }
+                                                    } catch (PDOException $x) {
+                                                        echo $x;
+                                                    }
+
+                                                    ?>
                                             </select>
                                         </div>
                                         <label class="form-label col-form-label col-md-2">Nueva nacionalidad:</label>
-                                        <div class="col-md-1">
-                                            <div class="form-check mt-1">
-                                                <input class="form-check-input" type="checkbox" name="nacionalidad" id="nacionalidad">
-                                            </div>
-                                        </div>
                                         <div class="col-md-3">
                                             <input class="form-control" type="text" placeholder="Ingrese el nuevo pais..." disabled name="n_pais" id="n_pais" required>
                                         </div>
@@ -107,10 +118,18 @@
                                             <div class="col-md-2">
                                                 <select class="form-select" name="departamento" id="departamento">
                                                     <!=====php para traer departamentos=====>
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="mercedes">Mercedes</option>
-                                                        <option value="audi">Audi</option>
+                                                        <?php
+                                                        try {
+                                                            $sentencia = $pdo->query("SELECT codigo,valores FROM \"CAT-012\"");
+                                                            $sentencia->execute();
+                                                            $obj_depa = $sentencia->fetchAll(PDO::FETCH_OBJ);
+                                                            foreach ($obj_depa as $y) {
+                                                        ?>
+                                                                <option value="<?php echo $y->codigo; ?>"><?php echo $y->valores; ?></option>
+                                                        <?php }
+                                                        } catch (PDOException $x) {
+                                                            echo $x;
+                                                        } ?>
                                                 </select>
                                             </div>
 
@@ -123,11 +142,7 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <select class="form-select" name="municipio" id="municipio">
-                                                    <!=====php para traer departamentos=====>
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="mercedes">Mercedes</option>
-                                                        <option value="audi">Audi</option>
+                                                    <option value="">Seleccione un municipio</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -196,6 +211,7 @@
                                     <div class="col-sm-2">
                                         <input onclick="Cuenta_proveedor()" class="form-control" type="text" placeholder=". . . . . . . ." name="Cuenta" id="Cuenta" required>
                                     </div>
+                                    <label id="nom_cuenta" class="form-label col-form-label col-md-3" hidden>a</label>
                                 </div>
                                 <div class="row form-group mb-30px">
                                     <div class="col-md-11">
@@ -240,15 +256,15 @@
 
         </div>
     </div>
-
+                                                  
     <script>
         //Form proveedores 
         function Actividad_Economica() {
             window.open('ActEconomica.php', 'miniatura', 'width=500,height=700');
         }
 
-        function Cuenta_proveedor(){
-            window.open('Cuentas_proveedores.php','miniatura','width=500,height=700');
+        function Cuenta_proveedor() {
+            window.open('Cuentas_proveedores.php', 'miniatura', 'width=500,height=700');
         }
 
 
@@ -257,11 +273,56 @@
             document.getElementById('act_economica').value = informacion;
         }
 
-        function recibirInfoCuenta(cuenta){
-            document.getElementById('Cuenta').value = cuenta;
+        function recibirInfoCuenta(cuenta, nombre) {
+            var total = "";
+            for(var i = 0;i <9;i++ ){
+                if(i <2)
+                    total += cuenta[i]+".";
+                else if(i < cuenta.length){
+
+                }
+                
+                
+            }
+            console.log(total);
+            //document.getElementById('Cuenta').value = cuenta;
+            document.getElementById('nom_cuenta').textContent = nombre;
+            document.getElementById('nom_cuenta').hidden = false;
         }
 
-        
+
+        //-------------------Obtener el municipio respectivo al departamento
+        document.getElementById('departamento').addEventListener('change', function() {
+            var codigoDepa = this.value;
+            var SelectMunicipio = document.getElementById('municipio');
+
+            SelectMunicipio.innerHTML = '<option value="">Cargando...</option>';
+            if (codigoDepa) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "../M/Modelos_punto_venta/ModeloMunicipio.php?codigo_departamento=" + codigoDepa, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var municipios = JSON.parse(xhr.responseText);
+                        SelectMunicipio.innerHTML = '<option value="">Seleccione un municipio</option>';
+                        if (municipios.error)
+                            alert(municipios.error)
+                        else {
+                            municipios.forEach(function(municipio) {
+                                var option = document.createElement('option');
+                                option.value = municipio.valores;
+                                option.textContent = municipio.valores;
+                                SelectMunicipio.appendChild(option);
+                            });
+                        }
+                    }
+                };
+                xhr.send();
+            } else {
+                SelectMunicipio.innerHTML = '<option value="">Seleccione un municipio</option>';
+            }
+        })
+
+       
     </script>
 
 </body>

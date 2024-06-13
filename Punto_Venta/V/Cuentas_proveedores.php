@@ -44,16 +44,24 @@ require "../M/conexion.php";
                 </thead>
                 <tbody>
                     <?php
+                    try{
                     $sentencia = $pdo->query("SELECT * FROM catalogo WHERE Cuenta LIKE '2102%' and terminal = 'T' and (nivel = 7 OR nivel= 6) ORDER BY descripcion ASC");
                     $sentencia->execute();
                     $cuenta_pro = $sentencia->fetchAll(PDO::FETCH_OBJ);
                     foreach ($cuenta_pro as $x) { ?>
-                        <tr style="cursor: pointer;" onclick="LlenarActividad('<?php echo $x->cuenta ?>')">
+                        <tr style="cursor: pointer;" onclick="LlenarActividad('<?php echo $x->cuenta ?>','<?php echo $x->descripcion ?>')">
                             <td><?php echo $x->cuenta ?></td>
                             <td><?php echo $x->descripcion ?></td>
                             <td><?php echo $x->nivel ?></td>
                         </tr>
-                    <?php } ?>
+                    <?php }
+                    
+                    }catch(PDOException $x){
+                        echo $x;
+                    }finally{
+                        $sentencia = null;
+                        $pdo = null;
+                    }?>
                 </tbody>
 
             </table>
@@ -61,8 +69,8 @@ require "../M/conexion.php";
     </div>
 
     <script>
-        function LlenarActividad(cuenta) { //b
-            window.opener.recibirInfoCuenta(cuenta);
+        function LlenarActividad(cuenta,nombre) { //b
+            window.opener.recibirInfoCuenta(cuenta,nombre);
             window.close();
         }
     </script>
