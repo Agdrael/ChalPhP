@@ -39,55 +39,55 @@ require "../M/conexion.php";
                         <form>
                             <div class="row mb-50px justify-content-center">
                                 <div class="col-md-2">
-                                    <input type="button" value="Cta Nueva" class="btn btn-primary w-100">
+                                    <input type="button" onclick="CrearCuenta()" value="Cta Nueva" class="btn btn-primary w-100">
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" value="Mismo Nv" class="btn btn-primary w-100">
+                                    <input type="button" onclick="Mismolvl()" value="Mismo Nv" class="btn btn-primary w-100">
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" value="Sub - Cta" class="btn btn-primary w-100">
+                                    <input type="button" onclick="SubCita()" value="Sub - Cta" class="btn btn-primary w-100">
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" value="Guardar" class="btn btn-green w-100">
+                                    <input type="button" onclick="Guardar()" value="Guardar" class="btn btn-green w-100">
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" value="Eliminar" class="btn btn-danger w-100">
+                                    <input type="button" onclick="Eliminar()" value="Eliminar" class="btn btn-danger w-100">
                                 </div>
                             </div>
 
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Código Cuenta:</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="codigo_cuenta" class="form-control mb-5px" placeholder=". . . . . . . .">
+                                    <input type="text" id="codigo_cuenta" class="form-control mb-5px" placeholder=". . . . . . . ." readonly>
                                 </div>
                             </div>
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Tipo de cuenta:</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="tipo_cuenta" class="form-control mb-5px" placeholder="">
+                                    <input type="text" id="tipo_cuenta" class="form-control mb-5px" placeholder="" readonly>
                                 </div>
                             </div>
                             
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Descripción:</label>
                                 <div class="col-md-9">
-                                    <input type="text"  class="form-control mb-5px" placeholder="">
+                                    <input type="text"  class="form-control mb-5px" placeholder="" readonly>
                                 </div>
                             </div>
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Nom Centro:</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="descripcion" class="form-control mb-5px" placeholder="">
+                                    <input type="text" id="descripcion" class="form-control mb-5px" placeholder="" readonly>
                                 </div>
                             </div>
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Tipo saldo:</label>
                                 <div class="col-md-2 pt-2">
-                                    <input Class="form-check-input" type="radio" name="tipo_saldo" id="radio1" value="D" checked /> <!--Pasivo/--->
+                                    <input Class="form-check-input" type="radio" name="tipo_saldo" id="radio1" value="D"  disabled /> <!--Pasivo/--->
                                     <label class="form-check-label" for="radio1">Deudor</label>
                                 </div>
                                 <div class="col-md-2 pt-2">
-                                    <input Class="form-check-input" type="radio" name="tipo_saldo" id="radio2" value="A" /> <!--Activo/--->
+                                    <input Class="form-check-input" type="radio" name="tipo_saldo" id="radio2" value="A" disabled /> <!--Activo/--->
                                     <label class="form-check-label" for="radio2">Acredetor</label>
                                 </div>
                             </div>
