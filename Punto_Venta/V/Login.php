@@ -147,7 +147,3 @@
 
 
 
-@@include('./partial/script.html', {
-"script": [
-]}
-)

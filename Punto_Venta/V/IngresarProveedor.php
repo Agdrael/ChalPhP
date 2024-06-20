@@ -256,7 +256,8 @@ require '../M/conexion.php';
 
         </div>
     </div>
-                                                  
+    <script src="../assets/js/vendor.min.js"></script>
+	<script src="../assets/js/app.min.js"></script>                                             
     <script>
         //Form proveedores 
         function Actividad_Economica() {
@@ -275,17 +276,21 @@ require '../M/conexion.php';
 
         function recibirInfoCuenta(cuenta, nombre) {
             var total = "";
+            var control = 0;
             for(var i = 0;i <9;i++ ){
-                if(i <2)
-                    total += cuenta[i]+".";
-                else if(i < cuenta.length){
-
-                }
-                
-                
+                if(i <2){
+                    total += cuenta[control]+".";
+                    control++;
+                }else if(control < cuenta.length){
+                    total += cuenta[control]+cuenta[control+1]+".";
+                    control +=2;
+                }else{
+                    total +=" .";
+                } 
             }
-            console.log(total);
-            //document.getElementById('Cuenta').value = cuenta;
+            total = total.substring(0,total.length-1);
+            
+            document.getElementById('Cuenta').value = total;
             document.getElementById('nom_cuenta').textContent = nombre;
             document.getElementById('nom_cuenta').hidden = false;
         }
