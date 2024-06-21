@@ -21,13 +21,17 @@ require "../M/conexion.php";
     <link href="../assets/plugins/datatables.net-keytable-bs5/css/keyTable.bootstrap5.min.css" rel="stylesheet" />
     <!-- ================== END page-css ================== -->
 
-    <Script src="../assets/js2/CatalogoCuentas.js"> </script>
+
 
 
 
 </head>
 
 <body>
+    <div class="container">
+        <div class="alert-container"></div>
+        <div class="data-container"></div>
+    </div>
     <div id="content" class="app-content">
         <div class="row mb-3">
             <div class="col-xl-6 ui-sortable">
@@ -36,58 +40,58 @@ require "../M/conexion.php";
                         <h4 class="panel-title">Catalogo de cuentas</h4>
                     </div>
                     <div class="panel-body">
-                        <form>
+                        <form id="formulario_cta">
                             <div class="row mb-50px justify-content-center">
                                 <div class="col-md-2">
-                                    <input type="button" value="Cta Nueva" class="btn btn-primary w-100">
+                                    <input type="button" onclick="CrearCuenta()" value="Cta Nueva" class="btn btn-primary w-100">
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" value="Mismo Nv" class="btn btn-primary w-100">
+                                    <input type="button" id="mismo_lvl" value="Mismo Nv" class="btn btn-primary w-100" disabled>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" value="Sub - Cta" class="btn btn-primary w-100">
+                                    <input type="button" onclick="SubCita()" value="Sub - Cta" class="btn btn-primary w-100" disabled>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" value="Guardar" class="btn btn-green w-100">
+                                    <input type="button" onclick="Guardar()" value="Guardar" class="btn btn-green w-100" disabled>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" value="Eliminar" class="btn btn-danger w-100">
+                                    <input type="button" onclick="Eliminar()" value="Eliminar" class="btn btn-danger w-100" disabled>
                                 </div>
                             </div>
 
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Código Cuenta:</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="codigo_cuenta" class="form-control mb-5px" placeholder=". . . . . . . .">
+                                    <input type="text" onchange="CancelarBoton()" id="codigo_cuenta" class="form-control mb-5px" placeholder=". . . . . . . ." readonly>
                                 </div>
                             </div>
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Tipo de cuenta:</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="tipo_cuenta" class="form-control mb-5px" placeholder="">
+                                    <input type="text" id="tipo_cuenta" class="form-control mb-5px" placeholder="" readonly>
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Descripción:</label>
                                 <div class="col-md-9">
-                                    <input type="text"  class="form-control mb-5px" placeholder="">
+                                    <input type="text" id="descrip" class="form-control mb-5px" placeholder="" readonly>
                                 </div>
                             </div>
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Nom Centro:</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="descripcion" class="form-control mb-5px" placeholder="">
+                                    <input type="text" id="descripcion" class="form-control mb-5px" placeholder="" readonly>
                                 </div>
                             </div>
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Tipo saldo:</label>
                                 <div class="col-md-2 pt-2">
-                                    <input Class="form-check-input" type="radio" name="tipo_saldo" id="radio1" value="D" checked /> <!--Pasivo/--->
+                                    <input Class="form-check-input" type="radio" name="tipo_saldo" id="radio1" value="D" disabled /> <!--Pasivo/--->
                                     <label class="form-check-label" for="radio1">Deudor</label>
                                 </div>
                                 <div class="col-md-2 pt-2">
-                                    <input Class="form-check-input" type="radio" name="tipo_saldo" id="radio2" value="A" /> <!--Activo/--->
+                                    <input Class="form-check-input" type="radio" name="tipo_saldo" id="radio2" value="A" disabled /> <!--Activo/--->
                                     <label class="form-check-label" for="radio2">Acredetor</label>
                                 </div>
                             </div>
@@ -173,25 +177,54 @@ require "../M/conexion.php";
     <script src="../assets/js/demo/render.highlight.js"></script>
     <!-- ================== END page-js ================== -->
 
-    <script>
-        function llevarDatos(N_cuenta,Tipo_Cuenta,nombre_cuenta){
+    <Script src="../assets/js2/CatalogoCuentas.js"> </script>
 
-            document.getElementById('codigo_cuenta').value=N_cuenta;
-            if(Tipo_Cuenta == 'D'){
-                document.getElementById('tipo_cuenta').value="Cuenta de activo";
+    <script>
+        function llevarDatos(N_cuenta, Tipo_Cuenta, nombre_cuenta) {
+
+            actualizarCodigoCuenta(N_cuenta);
+            if (Tipo_Cuenta == 'D') {
+                document.getElementById('tipo_cuenta').value = "Cuenta de activo";
                 document.getElementById('radio1').checked = true;
                 document.getElementById('radio2').checked = false;
-            }    
-            else{
-                document.getElementById('tipo_cuenta').value="Cuenta de pasivo";
+            } else {
+                document.getElementById('tipo_cuenta').value = "Cuenta de pasivo";
                 document.getElementById('radio1').checked = false;
                 document.getElementById('radio2').checked = true;
             }
-                
-            
-            document.getElementById('descripcion').value=nombre_cuenta;
-            
+
+
+            document.getElementById('descripcion').value = nombre_cuenta;
+
         }
+
+        document.getElementById('codigo_cuenta').addEventListener('input', function() {
+            CancelarBoton();
+        });
+
+        window.onload = function() {
+            CancelarBoton();
+        };
+
+        //ajax
+        $(document).ready(function() {
+            $.ajax({
+                url: '../M/Modelos_punto_venta/ModeloCatalogoCuentas.php',
+                method: 'GET',
+                success: function(response) {
+                    var data = JSON.parse(response);
+
+                    var alerta = '<div class="alert alert-' + data.alert_type + ' alert-dismissible fade show" role="alert">' +
+                                    data.message +
+                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                '<span aria-hidden="true">&times;</span>' +
+                                '</button>' +
+                                '</div>';
+
+                    $('#alert-container').html(alerta);
+                }
+            })
+        })
     </script>
 
 </body>
