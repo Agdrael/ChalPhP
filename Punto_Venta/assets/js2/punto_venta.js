@@ -34,15 +34,7 @@ function disabledCuentas(){
 }
 
 //proveedor
-function Nacionalidad(){
-    var otro = document.getElementById('nacionalidad').value;
-    var txtnacionalidad = document.getElementById('n_pais');
 
-    if(otro == "otro")
-        txtnacionalidad.disabled = false;
-    else
-        txtnacionalidad.disabled = true;
-}
 
 
 

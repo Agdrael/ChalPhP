@@ -15,7 +15,6 @@ require '../M/conexion.php';
     <link href="../assets/css/default/app.min.css" rel="stylesheet" />
     <!-- ================== END core-css ================== -->
 
-    <script src="../assets/js2/punto_venta.js"></script>
 
 </head>
 
@@ -81,7 +80,7 @@ require '../M/conexion.php';
                                         </div>
                                         <label class="form-label col-form-label col-md-2">Nueva nacionalidad:</label>
                                         <div class="col-md-3">
-                                            <input class="form-control" type="text" placeholder="Ingrese el nuevo pais..." disabled name="n_pais" id="n_pais" required>
+                                            <input class="form-control" type="text" placeholder="Ingrese nueva nacionalidad..." disabled name="n_pais" id="n_pais" required>
                                         </div>
 
                                     </div>
@@ -132,15 +131,8 @@ require '../M/conexion.php';
                                                         } ?>
                                                 </select>
                                             </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row form-group mb-30px">
-                                    <label class="form-label col-form-label col-md-1">Municipio:</label>
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            <div class="col-md-2">
+                                            <label class="form-label col-form-label col-md-1">Municipio:</label>
+                                            <div class="col-md-3">
                                                 <select class="form-select" name="municipio" id="municipio">
                                                     <option value="">Seleccione un municipio</option>
                                                 </select>
@@ -148,6 +140,7 @@ require '../M/conexion.php';
                                         </div>
                                     </div>
                                 </div>
+
                                 <!-- ================== separador ================== -->
                                 <div class="col-md-7">
                                     <hr style="height:1px;border:none;color:#333;background-color:#333;">
@@ -240,13 +233,13 @@ require '../M/conexion.php';
                                 </div>
                                 <div class="row mb-60px">
                                     <div class="col-md-1">
-                                        <button type="submit" class="btn btn-green">Guardar</button>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                                        <button type="submit"  id="guardar_proveedor" class="btn btn-green">Guardar</button>
                                     </div>
                                     <div class="col-md-1">
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-gray">Limpiar</button>
                                     </div>
                                 </div>
                         </form>
@@ -257,7 +250,7 @@ require '../M/conexion.php';
         </div>
     </div>
     <script src="../assets/js/vendor.min.js"></script>
-	<script src="../assets/js/app.min.js"></script>                                             
+    <script src="../assets/js2/IngresarProveedor.js"></script>
     <script>
         //Form proveedores 
         function Actividad_Economica() {
@@ -277,19 +270,19 @@ require '../M/conexion.php';
         function recibirInfoCuenta(cuenta, nombre) {
             var total = "";
             var control = 0;
-            for(var i = 0;i <9;i++ ){
-                if(i <2){
-                    total += cuenta[control]+".";
+            for (var i = 0; i < 9; i++) {
+                if (i < 2) {
+                    total += cuenta[control] + ".";
                     control++;
-                }else if(control < cuenta.length){
-                    total += cuenta[control]+cuenta[control+1]+".";
-                    control +=2;
-                }else{
-                    total +=" .";
-                } 
+                } else if (control < cuenta.length) {
+                    total += cuenta[control] + cuenta[control + 1] + ".";
+                    control += 2;
+                } else {
+                    total += " .";
+                }
             }
-            total = total.substring(0,total.length-1);
-            
+            total = total.substring(0, total.length - 1);
+
             document.getElementById('Cuenta').value = total;
             document.getElementById('nom_cuenta').textContent = nombre;
             document.getElementById('nom_cuenta').hidden = false;
@@ -326,8 +319,6 @@ require '../M/conexion.php';
                 SelectMunicipio.innerHTML = '<option value="">Seleccione un municipio</option>';
             }
         })
-
-       
     </script>
 
 </body>
