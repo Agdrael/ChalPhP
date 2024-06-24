@@ -26,7 +26,8 @@ switch($data['accion']){
             echo json_encode(['status' => 'failed', 'message' => 'Campos vacios']);
         }else{
             try{
-                $sentencia = $pdo->prepare("INSERT INTO proveedores (nombre_proveedor,id_nacionalidad,n_comercial,contacto,domiciliado,direccion,id_departamento,municipio,id_act_economica,telefono,telefono2,nit,dui,r_fiscal,giro,cuenta,categoria) VALUES (:nombre,:nacionalidad,:)")
+                $sentencia = $pdo->prepare("INSERT INTO proveedores (nombre_proveedor,id_nacionalidad,n_comercial,contacto,domiciliado,direccion,id_departamento,municipio,id_act_economica,telefono,telefono2,nit,dui,r_fiscal,giro,cuenta,categoria) VALUES (:nombre,:,:nacionalidad, :n_comercial, :contacto, :domicialiado, :direccion, :id_depa, :municipio, :id_act_eco, :telefono, :telefono2, :nit, :dui, :r_fiscal, :giro, :cuenta, :categoria)");
+                $sentencia->bindParam(':nombre',$razon_social, PDO::PARAM_STR);
             }catch(PDOException $x){
 
             }finally{
