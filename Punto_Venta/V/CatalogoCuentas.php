@@ -49,20 +49,20 @@ require "../M/conexion.php";
                                     <input type="button" id="mismo_lvl" value="Mismo Nv" class="btn btn-primary w-100" disabled>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" onclick="SubCita()" value="Sub - Cta" class="btn btn-primary w-100" disabled>
+                                    <input type="button" id="sub_cta"  value="Sub - Cta" class="btn btn-primary w-100" disabled>
                                 </div>
                                 <div class="col-md-2">
                                     <input type="button" onclick="Guardar()" value="Guardar" class="btn btn-green w-100" disabled>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="button" onclick="Eliminar()" value="Eliminar" class="btn btn-danger w-100" disabled>
+                                    <input type="button" onclick="Eliminar()" value="Eliminar" class="btn btn-danger w-100">
                                 </div>
                             </div>
 
                             <div class="row mb-15px">
                                 <label class="form-label col-form-label col-md-2">Código Cuenta:</label>
                                 <div class="col-md-9">
-                                    <input type="text" onchange="CancelarBoton()" id="codigo_cuenta" class="form-control mb-5px" placeholder=". . . . . . . ." readonly>
+                                    <input type="text" onchange="CancelarBoton()" id="codigo_cuenta" class="form-control mb-5px" placeholder=". . . . . . . ." readonly maxlength="16">
                                 </div>
                             </div>
                             <div class="row mb-15px">
@@ -206,25 +206,60 @@ require "../M/conexion.php";
             CancelarBoton();
         };
 
+
+
         //ajax
         $(document).ready(function() {
             $.ajax({
                 url: '../M/Modelos_punto_venta/ModeloCatalogoCuentas.php',
                 method: 'GET',
-                success: function(response) {
+                warning: function(response) {
                     var data = JSON.parse(response);
 
                     var alerta = '<div class="alert alert-' + data.alert_type + ' alert-dismissible fade show" role="alert">' +
-                                    data.message +
-                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                                '<span aria-hidden="true">&times;</span>' +
-                                '</button>' +
-                                '</div>';
+                        data.message +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                        '</button>' +
+                        '</div>';
 
                     $('#alert-container').html(alerta);
+
+                    // Manejar clic en el botón "Continuar"
+                    $('#continue-button').on('click', function() {
+                        // Lógica para continuar el proceso
+                        alert('Continuar con el proceso');
+                        // Por ejemplo, puedes hacer otra solicitud AJAX para continuar el proceso
+                        // $.ajax({
+                        //     url: 'otro_script_php.php',
+                        //     method: 'POST',
+                        //     data: { action: 'continuar' },
+                        //     success: function(response) {
+                        //         // Manejar la respuesta
+                        //     }
+                        // });
+                    });
+
+                    // Manejar clic en el botón "Cancelar"
+                    $('#cancel-button').on('click', function() {
+                        // Lógica para cancelar el proceso
+                        alert('Proceso cancelado');
+                        // Ocultar la alerta
+                        $('#alert-container').empty();
+                    });
+
+                    // Si hay datos, mostrarlos
+                    if (data.status === 'success' && data.data) {
+                        var dataHTML = '<ul>';
+                        $.each(data.data, function(index, item) {
+                            dataHTML += '<li>' + JSON.stringify(item) + '</li>';
+                        });
+                        dataHTML += '</ul>';
+                        $('#data-container').html(dataHTML);
+                    }
                 }
             })
-        })
+        });
     </script>
 
 </body>
