@@ -28,7 +28,7 @@ require '../M/conexion.php';
                         <h4 class="panel-title">Proveedores</h4>
                     </div>
                     <div class="panel-body">
-                        <form action="../M/Modelos_punto_venta/ModeloProductos.php" method="post" id="FormProductos">
+                        <form  method="post" id="FormProductos">
                             <div class="row mb-20px">
                                 <label class="form-label col-form-label col-md-1">Razon Social :</label>
                                 <div class="col-sm-6">
@@ -233,7 +233,7 @@ require '../M/conexion.php';
                                 </div>
                                 <div class="row mb-60px">
                                     <div class="col-md-1">
-                                        <button type="submit"  id="guardar_proveedor" class="btn btn-green">Guardar</button>
+                                        <button type="button"  id="guardar_proveedor" class="btn btn-green">Guardar</button>
                                     </div>
                                     <div class="col-md-1">
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
