@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
                 }
             }
+        var correo =document.getElementById('correo').value
 
         const data = {
             accion: 1,
@@ -62,10 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
             municipio: municipio,
             act_economica: act_economica,
             telefono: telefono,
-            telefonoo: telefono2,
+            telefono2: telefono2,
             NIT: NIT,
             Dui: Dui,
             R_fiscal: R_fiscal,
+            correo: correo,
             Giro: Giro,
             Cuenta: Cuenta,
             Tamaño: selectedtamaño

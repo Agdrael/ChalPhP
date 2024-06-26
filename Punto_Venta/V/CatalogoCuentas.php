@@ -28,10 +28,6 @@ require "../M/conexion.php";
 </head>
 
 <body>
-    <div class="container">
-        <div class="alert-container"></div>
-        <div class="data-container"></div>
-    </div>
     <div id="content" class="app-content">
         <div class="row mb-3">
             <div class="col-xl-6 ui-sortable">

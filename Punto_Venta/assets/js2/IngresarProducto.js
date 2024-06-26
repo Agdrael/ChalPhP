@@ -33,8 +33,10 @@ function disabledCuentas(){
     }
 }
 
-//proveedor
 
+document.addEventListener('DOMContentLoaded', function (){
+    docuument.getElementById()
+});
 
 
 
