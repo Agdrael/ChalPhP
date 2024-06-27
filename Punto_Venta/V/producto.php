@@ -41,7 +41,8 @@ require "../M/conexion.php";
                             <div class="row mb-20px">
                                 <label class="form-label col-form-label col-md-2">Código:</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" name="codigo" id="codigo" readonly disabled>
+                                    <input class="form-control" type="text" name="codigo_qr" id="codigo_qr"  >
+
                                 </div>
                             </div>
                             <div class="row mb-20px">
@@ -60,7 +61,7 @@ require "../M/conexion.php";
                                 <div class="col-md-11">
                                     <div class="row">
                                         <label class="form-label col-form-label col-md-2">Detalle:</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-6 mb-15px">
                                             <div class="form-check pt-2 ml-3">
                                                 <input class="form-check-input" type="radio" name="Bien_Servicio" onclick="disabledCuentas()" id="radio1" checked value="B" />
                                                 <label class="form-check-label" for="radio1">Bien</label>
@@ -73,7 +74,7 @@ require "../M/conexion.php";
                                     </div>
                                     <div class="row">
                                         <label class="form-label col-form-label col-md-2">Tipo precio:</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-6 mb-15px">
                                             <div class="form-check pt-2 ml-3">
                                                 <input class="form-check-input" type="radio" name="Fijo_Variable" id="radio3" checked value="F" />
                                                 <label class="form-check-label" for="radio3">Fijo</label>
@@ -86,7 +87,7 @@ require "../M/conexion.php";
                                     </div>
                                     <div class="row">
                                         <label class="form-label col-form-label col-md-2">Impuesto:</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-6 mb-15px">
                                             <div class="form-check pt-2 ml-3">
                                                 <input class="form-check-input" type="radio" name="Exenta_Afecta" id="radio5" checked value="E" />
                                                 <label class="form-check-label" for="radio5">Exenta</label>
@@ -103,6 +104,7 @@ require "../M/conexion.php";
                                     </div>
                                 </div>
                             </div>
+
                             <!-- ================== separador ================== -->
                             <div class="col-md-7">
                                 <hr style="height:1px;border:none;color:#333;background-color:#333;">
@@ -217,23 +219,27 @@ require "../M/conexion.php";
                             <table id="data-table-keytable" width="100%" class="table table-striped table-bordered align-middle text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>Cuenta</th>
-                                        <th>Nombre de la cuenta</th>
-                                        <th>T.saldo</th>
-                                        <th>Ult</th>
+                                        <th>Codigo</th>
+                                        <th>Descripcion</th>
+                                        <th>Grupo</th>
+                                        <th>Cta.Inventario</th>
+                                        <th>Cta.Gastos</th>
+                                        <th>Cta.Ingresos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sentencia1  = $pdo->query("SELECT cuenta, descripcion, tipo_saldo, nivel FROM catalogo");
+                                    $sentencia1  = $pdo->query("SELECT codigo, descripcion, grupo,cuenta_inv,cuenta_gas,cuenta_ing FROM productos");
                                     $sentencia1->execute();
                                     $obj_numero = $sentencia1->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($obj_numero as $x) { ?>
-                                        <tr onclick="llevarDatos('<?php echo $x->cuenta ?>','<?php echo $x->tipo_saldo ?>','<?php echo $x->descripcion ?>')">
-                                            <td><?php echo $x->cuenta ?></td>
+                                        <tr>
+                                            <td><?php echo $x->codigo ?></td>
                                             <td><?php echo $x->descripcion ?></td>
-                                            <td><?php echo ($x->tipo_saldo == 'D') ? 'Deudor' : 'Acreedor'; ?></td>
-                                            <td><?php echo ($x->nivel == 7) ? 'si' : ''; ?></td>
+                                            <td><?php echo $x->grupo ?></td>
+                                            <td><?php echo $x->cuenta_inv ?></td>
+                                            <td><?php echo $x->cuenta_gas ?></td>
+                                            <td><?php echo $x->cuenta_ing ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
