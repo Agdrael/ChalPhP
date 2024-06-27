@@ -28,7 +28,7 @@ require '../M/conexion.php';
                         <h4 class="panel-title">Proveedores</h4>
                     </div>
                     <div class="panel-body">
-                        <form  method="post" id="FormProductos">
+                        <form method="post" id="FormProductos">
                             <div class="row mb-20px">
                                 <label class="form-label col-form-label col-md-1">Razon Social :</label>
                                 <div class="col-sm-6">
@@ -68,14 +68,15 @@ require '../M/conexion.php';
                                                         print_r($obj_nacionalidad);
                                                         foreach ($obj_nacionalidad as $x) { ?>
 
-                                                            <option value="<?php echo $x->id ?>"><?php echo $x->nacionalidad ?></option>
-                                                            <option value="otro">Otro..</option>
+                                                            <option value="<?php echo $x->id_nacionalidad ?>"><?php echo $x->nacionalidad ?></option>
+
                                                     <?php }
                                                     } catch (PDOException $x) {
                                                         echo $x;
                                                     }
 
                                                     ?>
+                                                    <option value="otro">Otro..</option>
                                             </select>
                                         </div>
                                         <label class="form-label col-form-label col-md-2">Nueva nacionalidad:</label>
@@ -180,7 +181,7 @@ require '../M/conexion.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row form-group mb-30px">
+                                <div class="row form-group mb-15px">
                                     <label class="form-label col-form-label col-md-1">R.Fiscal:</label>
                                     <div class="col-md-8">
                                         <div class="row">
@@ -192,6 +193,12 @@ require '../M/conexion.php';
                                                 <input class="form-control" type="text" placeholder="Ingrese el Giro..." name="Giro" id="Giro" required>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-25px">
+                                    <label class="form-label col-form-label col-md-1">Correo electronico:</label>
+                                    <div class="col-md-5">
+                                        <input  class="form-control" type="text" placeholder="Ingrese correo electronico..." name="correo" id="correo" required>
                                     </div>
                                 </div>
                                 <!-- ================== separador ================== -->
@@ -233,7 +240,7 @@ require '../M/conexion.php';
                                 </div>
                                 <div class="row mb-60px">
                                     <div class="col-md-1">
-                                        <button type="button"  id="guardar_proveedor" class="btn btn-green">Guardar</button>
+                                        <button type="button" id="guardar_proveedor" class="btn btn-green">Guardar</button>
                                     </div>
                                     <div class="col-md-1">
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -254,11 +261,11 @@ require '../M/conexion.php';
     <script>
         //Form proveedores 
         function Actividad_Economica() {
-            window.open('ActEconomica.php', 'miniatura', 'width=500,height=700');
+            window.open('tablas/ActEconomica.php', 'miniatura', 'width=500,height=700');
         }
 
         function Cuenta_proveedor() {
-            window.open('Cuentas_proveedores.php', 'miniatura', 'width=500,height=700');
+            window.open('tablas/Cuentas_proveedores.php', 'miniatura', 'width=500,height=700');
         }
 
 

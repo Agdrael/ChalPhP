@@ -1,5 +1,5 @@
 <?php
-require "../M/conexion.php";
+require "../../M/conexion.php";
 ?>
 
 <!DOCTYPE html>
@@ -12,11 +12,11 @@ require "../M/conexion.php";
     <meta content="" name="description" />
     <meta content="" name="author" />
     <!-- ================== BEGIN core-css ================== -->
-    <link href="../assets/css/vendor.min.css" rel="stylesheet" />
-    <link href="../assets/css/default/app.min.css" rel="stylesheet" />
-    <link href="../assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
-    <link href="../assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" />
-    <link href="../assets/plugins/datatables.net-select-bs5/css/select.bootstrap5.min.css" rel="stylesheet" />
+    <link href="../../assets/css/vendor.min.css" rel="stylesheet" />
+    <link href="../../assets/css/default/app.min.css" rel="stylesheet" />
+    <link href="../../assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="../../assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" />
+    <link href="../../assets/plugins/datatables.net-select-bs5/css/select.bootstrap5.min.css" rel="stylesheet" />
     <!-- ================== END core-css ================== -->
 
     <!--========================= JS ======================== -->
@@ -33,7 +33,9 @@ require "../M/conexion.php";
             <h4 class="panel-tittle"> Catalogo</h4>
         </div>
         <div class="panel-body">
-            <table class="table table-striped table-bordered">
+            <div class="table-responsive">
+                
+            <table id="data-table-keytable" width="100%" class="table table-striped table-bordered align-middle text-nowrap">
                 <thead>
                     <tr>
                         <th>Cuenta</th>
@@ -65,8 +67,25 @@ require "../M/conexion.php";
                 </tbody>
 
             </table>
+            </div>
         </div>
     </div>
+
+    <!--========================= JS ======================== -->
+    <script src="../../assets/js/vendor.min.js"></script>
+
+    <!-- ================== BEGIN page-js ================== -->
+    <script src="../../assets/plugins/datatables.net/js/dataTables.min.js"></script>
+    <script src="../../assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../../assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+    <script src="../../assets/plugins/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="../../assets/plugins/datatables.net-keytable-bs5/js/keyTable.bootstrap5.min.js"></script>
+    <script src="../../assets/js/demo/table-manage-keytable.demo.js"></script>
+    <script src="../../assets/plugins/@highlightjs/cdn-assets/highlight.min.js"></script>
+    <script src="../../assets/js/demo/render.highlight.js"></script>
+    <!-- ================== END page-js ================== -->
+
 
     <script>
         function LlenarActividad(cuenta,nombre) { //b
