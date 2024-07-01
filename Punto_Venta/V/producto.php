@@ -110,6 +110,12 @@ require "../M/conexion.php";
                                 <hr style="height:1px;border:none;color:#333;background-color:#333;">
                             </div>
                             <!-- ================== separador ================== -->
+                            <div class="row mb-20px">
+                                <label class="form-label col-form-label col-md-2">Proveedores:</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" onclick="Cuenta_proveedor()" type="text" placeholder="Ingrese el nombre del proveedor..." name="proveedores" id="proveedores" required>
+                                </div>
+                            </div>
                             <div class="row form-group mb-15px mt-30px">
                                 <label class="form-label col-form-label col-md-2">Prec. Venta:</label>
                                 <div class="col-md-9">
@@ -117,32 +123,19 @@ require "../M/conexion.php";
                                         <div class="col-md-3">
                                             <input class="form-control" type="text" placeholder="Ingrese el precio..." name="precio" id="precio" required>
                                         </div>
-                                        <label class="form-label col-form-label col-md-1">IVA:</label>
-                                        <div class="col-md-1">
-                                            <div class="form-check mt-2">
-                                                <input class="form-check-input" type="checkbox" id="chk_iva" onclick="EnableIva()">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <input class="form-control" type="text" placeholder="Ingrese el valor del IVA..." disabled name="iva" id="iva" required>
-                                        </div>
+                                        <label class="form-label col-form-label col-md-2">IVA incluido</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-20px">
-                                <label class="form-label col-form-label col-md-2">Proveedores:</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="text" placeholder="Ingrese el nombre del proveedor..." name="proveedores" id="proveedores" required>
-                                </div>
-                            </div>
+                            
                             <div class="row form-group mb-15px">
                                 <label class="form-label col-form-label col-md-2">Cuenta Inv:</label>
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <input class="form-control" type="number" placeholder=". . . . . . . ." name="cuenta_inv" id="cuenta_inv" required>
+                                            <input class="form-control" onclick="Cuenta_inv()"  type="number" placeholder=". . . . . . . ." name="cuenta_inv" id="cuenta_inv" required>
                                         </div>
-                                        <label class="form-label col-form-label col-md-6">Descripcion_Cuenta_Inv</label>
+                                        <label id="labelCuentaInv" class="form-label col-form-label col-md-6" hidden>Descripcion_Cuenta_Inv</label>
                                     </div>
                                 </div>
                             </div>
@@ -151,9 +144,9 @@ require "../M/conexion.php";
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <input class="form-control" type="number" placeholder=". . . . . . . ." name="cuenta_cost" id="cuenta_cost" required>
+                                            <input class="form-control" onclick="Cuenta_costo()" type="number" placeholder=". . . . . . . ." name="cuenta_cost" id="cuenta_cost" required>
                                         </div>
-                                        <label class="form-label col-form-label col-md-6">Descripcion_Cuenta_Costo</label>
+                                        <label id="lblCuentaCos" class="form-label col-form-label col-md-6" hidden>Descripcion_Cuenta_Costo</label>
                                     </div>
                                 </div>
                             </div>
@@ -162,9 +155,9 @@ require "../M/conexion.php";
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <input class="form-control" type="number" placeholder=". . . . . . . ." name="cuenta_ingreso" id="cuenta_ingreso" required>
+                                            <input class="form-control" onclick="Cuenta_ing()" type="number" placeholder=". . . . . . . ." name="cuenta_ingreso" id="cuenta_ingreso" required>
                                         </div>
-                                        <label class="form-label col-form-label col-md-6">Descripcion_Cuenta_Costo</label>
+                                        <label id="lblCuentaIng" class="form-label col-form-label col-md-6" hidden>Descripcion_Cuenta_Costo</label>
                                     </div>
                                 </div>
                             </div>
@@ -199,13 +192,13 @@ require "../M/conexion.php";
                             </div>
                             <div class="row mb-60px">
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-green w-100">Guardar</button>
+                                    <button type="button" id="guardarProducto" class="btn btn-green w-100">Guardar</button>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+                                    <button type="button" class="btn btn-primary w-100">Actualizar</button>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="submit" class="btn btn-danger w-100">Eliminar</button>
+                                    <button type="button" class="btn btn-danger w-100">Eliminar</button>
                                 </div>
                             </div>
                         </form>
@@ -229,14 +222,14 @@ require "../M/conexion.php";
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sentencia1  = $pdo->query("SELECT codigo, descripcion, grupo,cuenta_inv,cuenta_gas,cuenta_ing FROM productos");
+                                    $sentencia1  = $pdo->query("SELECT codigo, descripcion,ubicacion,cuenta_inv,cuenta_gas,cuenta_ing FROM productos");
                                     $sentencia1->execute();
                                     $obj_numero = $sentencia1->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($obj_numero as $x) { ?>
                                         <tr>
                                             <td><?php echo $x->codigo ?></td>
                                             <td><?php echo $x->descripcion ?></td>
-                                            <td><?php echo $x->grupo ?></td>
+                                            <td><?php echo $x->ubicacion ?></td>
                                             <td><?php echo $x->cuenta_inv ?></td>
                                             <td><?php echo $x->cuenta_gas ?></td>
                                             <td><?php echo $x->cuenta_ing ?></td>
@@ -256,6 +249,7 @@ require "../M/conexion.php";
     <script src="../assets/js/vendor.min.js"></script>
 
     <!-- ================== BEGIN page-js ================== -->
+    <script src="../assets/plugins/jquery.maskedinput/src/jquery.maskedinput.js"></script>
     <script src="../assets/plugins/datatables.net/js/dataTables.min.js"></script>
     <script src="../assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
     <script src="../assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
@@ -269,9 +263,53 @@ require "../M/conexion.php";
 
     <script src="../assets/js2/IngresarProducto.js"></script>
     <script>
+
+        
+
         function Cuenta_proveedor() {
-            window.open('tablas/Cuentas_proveedores.php', 'miniatura', 'width=500,height=700');
+            window.open('tablas/Cuentas_proveedores.php', 'miniatura', 'width=700,height=700');
         }
+
+        function Recibir_proveedor(cuenta){
+            const nombreProveedor = cuenta;
+            document.getElementById('proveedores').value = cuenta;
+        }
+
+        function Cuenta_inv(){
+            window.open('tablas/Cuenta_inv.php','miniatura','width=600, height=700');
+        }
+
+        function Recibir_Inv(cuenta,nombre){
+            const cuentaInv = cuenta;
+            const nombreProveedor = nombre;
+            document.getElementById('cuenta_inv').value = cuenta;
+            document.getElementById('labelCuentaInv').textContent = nombre;
+            document.getElementById('labelCuentaInv').hidden = false;
+        }
+
+        function Cuenta_costo(){
+            window.open('tablas/Cuenta_gas.php','miniatura','width=600, height=700');
+        }
+
+        function Recibir_Cos(cuenta,nombre){
+            const cuentaCos = cuenta;
+            const nombreProveedor = nombre;
+            document.getElementById('cuenta_cost').value = cuenta;
+            document.getElementById('lblCuentaCos').textContent = nombre;
+            document.getElementById('lblCuentaCos').hidden = false;
+        }       
+
+        function Cuenta_ing(){
+            window.open('tablas/Cuenta_ing.php','miniatura','width=600, height=700');
+        }
+
+        function Recibir_Ing(cuenta,nombre){
+            const cuentaIng = cuenta;
+            const nombreProveedor = nombre;
+            document.getElementById('cuenta_ingreso').value = cuenta;
+            document.getElementById('lblCuentaIng').textContent = nombre;
+            document.getElementById('lblCuentaIng').hidden = false;
+        }  
     </script>
 </body>
 

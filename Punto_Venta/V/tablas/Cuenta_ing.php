@@ -20,7 +20,7 @@ require "../../M/conexion.php";
     <!-- ================== END core-css ================== -->
 
     <!--========================= JS ======================== -->
-   
+
 
 </head>
 
@@ -34,39 +34,30 @@ require "../../M/conexion.php";
         </div>
         <div class="panel-body">
             <div class="table-responsive">
-                
-            <table id="data-table-keytable" width="100%" class="table table-striped table-bordered align-middle text-nowrap">
-                <thead>
-                    <tr>
-                        <th>Cuenta</th>
-                        <th>Nombre</th>
-                        <th>Nivel</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    try{
-                    $sentencia = $pdo->query("SELECT * FROM catalogo WHERE Cuenta LIKE '2102%' and terminal = 'T' and (nivel = 7 OR nivel= 6) ORDER BY descripcion ASC");
-                    $sentencia->execute();
-                    $cuenta_pro = $sentencia->fetchAll(PDO::FETCH_OBJ);
-                    foreach ($cuenta_pro as $x) { ?>
-                        <tr style="cursor: pointer;" onclick="LlenarActividad('<?php echo $x->cuenta ?>')">
-                            <td><?php echo $x->cuenta ?></td>
-                            <td><?php echo $x->descripcion ?></td>
-                            <td><?php echo $x->nivel ?></td>
-                        </tr>
-                    <?php }
-                    
-                    }catch(PDOException $x){
-                        echo $x;
-                    }finally{
-                        $sentencia = null;
-                        $pdo = null;
-                    }?>
-                </tbody>
 
-            </table>
+                <table id="data-table-keytable" width="100%" class="table table-striped table-bordered align-middle text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Nivel</th>
+                            <th>Descripcion</th>
+                            <th>Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sentencia = $pdo->query("SELECT * FROM catalogo WHERE Cuenta LIKE '5101%' and terminal = 'T' and nivel BETWEEN 5 AND 9 ORDER BY descripcion ASC;");
+                        $sentencia->execute();
+                        $cuenta_inv = $sentencia->fetchAll(PDO::FETCH_OBJ);
+                        foreach ($cuenta_inv as $x) { ?>
+                            <tr style="cursor: pointer;" onclick="LlenarActividad('<?php echo $x->cuenta ?>','<?php echo $x->descripcion ?>')">
+                                <td><?php echo $x->cuenta ?></td>
+                                <td><?php echo $x->descripcion ?></td>
+                                <td><?php echo $x->nivel ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+
+                </table>
             </div>
         </div>
     </div>
@@ -86,12 +77,10 @@ require "../../M/conexion.php";
     <script src="../../assets/js/demo/render.highlight.js"></script>
     <!-- ================== END page-js ================== -->
 
-
     <script>
-        function LlenarActividad(cuenta) { //b
-            window.opener.Recibir_proveedor(cuenta);
+        function LlenarActividad(codigo, nombre) {
+            window.opener.Recibir_Ing(codigo, nombre);
             window.close();
         }
-
     </script>
 </body>
